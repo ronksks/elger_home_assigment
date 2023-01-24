@@ -1,0 +1,38 @@
+// Q2 SQL
+// SCHEMA:
+// EMPLOYEE:
+// ID (Integer) - Employee ID number. This is a primary key.
+// NAME (String) - Employee name
+// SALARY (Integer) - Employee salary
+// DEPT_ID (Integer) - ID of the employee's department, a foreign key to DEPARTMENT.ID.
+// DEPARTMENT:
+// ID (Integer) - Department ID. This is a primary key.
+// NAME (String) - Department name.
+// LOCATION (String) - Department location.
+
+create table EMPLOYEE (ID integer PRIMARY KEY, NAME varchar(100), SALARY integer, DEPT_ID integer);
+create table DEPARTMENT (ID integer PRIMARY KEY, NAME varchar(100), LOCATION varchar(100));
+insert into EMPLOYEE (ID, NAME, SALARY, DEPT_ID) values (1, 'Candice', '4685',1);
+insert into EMPLOYEE (ID, NAME, SALARY, DEPT_ID) values (2, 'Julia', '2559',2);
+insert into EMPLOYEE (ID, NAME, SALARY, DEPT_ID) values (3, 'Bob', '4405',4);
+insert into EMPLOYEE (ID, NAME, SALARY, DEPT_ID) values (4, 'Scarlet', '2350',1);
+insert into EMPLOYEE (ID, NAME, SALARY, DEPT_ID) values (5, 'Ileana', '1151',4);
+insert into DEPARTMENT (ID, NAME, SALARY, LOCATION) values (1, 'Executive', 'Sydney');
+insert into DEPARTMENT (ID, NAME, SALARY, LOCATION) values (2, 'Production', 'Sydney');
+insert into DEPARTMENT (ID, NAME, SALARY, LOCATION) values (3, 'Resources', 'Cape Town');
+insert into DEPARTMENT (ID, NAME, SALARY, LOCATION) values (4, 'Technical', 'Texas');
+insert into DEPARTMENT (ID, NAME, SALARY, LOCATION) values (5, 'Management', 'Paris');
+
+SELECT DEPARTMENT.NAME, COUNT(EMPLOYEE.ID)
+FROM DEPARTMENT
+LEFT JOIN EMPLOYEE ON DEPARTMENT.ID = EMPLOYEE.DEPT_ID
+GROUP BY DEPARTMENT.NAME
+ORDER BY COUNT(EMPLOYEE.ID) DESC, NAME ASC
+
+// output:
+// NAME	       COUNT(EMPLOYEE.ID)
+// Executive	2
+// Technical	2
+// Production	1
+// Management	0
+// Resources	0
